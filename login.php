@@ -73,7 +73,7 @@
 <div class="header">
     <a href="index.php" class="logo">My Friends System</a>
         <div class="nav">
-            <a href="index.php">Home</a>
+            <a href="index.php">Homene</a>
             <a href="signup.php">Sign-Up</a>
             <a href="login.php">Log-In</a>
             <a href="about.php">About</a>
