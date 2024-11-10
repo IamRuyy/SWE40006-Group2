@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROD_SERVER = '3.215.249.125'  // Replace with your actual production server IP
-        SSH_CREDENTIALS = 'c5f1eb9d-fce7-4cbb-a86f-7da927315011'
+        SSH_CREDENTIALS = 'c5f1eb9d-fce7-4cbb-a86f-7da927315011'  // Ensure this matches the credentials ID in Jenkins
     }
     stages {
         stage('Checkout Code') {
@@ -15,9 +15,7 @@ pipeline {
         //     steps {
         //         // Run tests directly on Jenkins, as it serves as the test server
         //         sh '''
-        //         # Ensure we're in the right directory (Jenkins workspace)
         //         cd $WORKSPACE
-        //         # Run the test script (adjust path if needed)
         //         php /var/www/html/run-tests.php
         //         '''
         //     }
@@ -32,7 +30,10 @@ pipeline {
             steps {
                 sshagent(credentials: [SSH_CREDENTIALS]) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} 'rm -rf /var/www/html/*'  // Replace ec2-user if necessary
+                    # Clear the contents of the production server's web root safely
+                    ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} 'find /var/www/html -mindepth 1 -delete'
+                    
+                    # Deploy the new files
                     scp -o StrictHostKeyChecking=no -r * ec2-user@${PROD_SERVER}:/var/www/html/
                     """
                 }
