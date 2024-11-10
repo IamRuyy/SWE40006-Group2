@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROD_SERVER = '3.215.249.125'  // Replace with your actual production server IP
-        SSH_CREDENTIALS = 'deploy-key'
+        SSH_CREDENTIALS = 'c5f1eb9d-fce7-4cbb-a86f-7da927315011'
     }
     stages {
         stage('Checkout Code') {
