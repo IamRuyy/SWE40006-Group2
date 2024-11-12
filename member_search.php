@@ -46,7 +46,7 @@
         echo "</table>";
         }
         else {
-            echo "<p style='color:red'>The Last Name '$lname' is not found</p>";
+            echo "<p style='color:red'; text-align:center>The Last Name '$lname' is not found</p>";
         }
 
         //Close the connection
