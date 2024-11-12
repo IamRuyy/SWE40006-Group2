@@ -2,7 +2,7 @@
 require_once("settings.php");
 
 // Connect to MySQL server
-$conn = @mysqli_connect($host, $user, $psw);
+$conn = @mysqli_connect($host, $user, $pswd);
 if (!$conn) {
     echo "Test failed: Failed to connect to MySQL server.\n";
     exit(1);  // Non-zero exit for failure
