@@ -22,8 +22,8 @@ pipeline {
             // Fail the build if this stage fails
             post {
                 failure {
-                    echo 'Tests failed. Aborting deployment.'
-                    currentBuild.result = 'FAILURE'  // Mark the build as failed
+                    echo 'Tests failed. Marking build as failed.'
+                    error('Tests failed. Aborting pipeline.')
                 }
             }
         }
