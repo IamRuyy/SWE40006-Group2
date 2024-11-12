@@ -19,7 +19,7 @@ pipeline {
                         set -e
                         echo "Starting tests..."
                         cd $WORKSPACE
-                        php run-tests.php
+                        php tests/run-tests.php  // Updated path to run-tests.php
                     ''', returnStatus: true)
 
                     // Check the test result and mark the build as failed if tests failed
@@ -42,11 +42,14 @@ pipeline {
             steps {
                 sshagent(credentials: [SSH_CREDENTIALS]) {
                     sh """
-                    # Clear the contents of the production server's web root safely
-                    ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} 'find /var/www/html -mindepth 1 -delete'
+                    # Ensure target directory exists on production server
+                    ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} 'mkdir -p /var/www/html/swe40006'
+
+                    # Clear the contents of the production server's target directory safely
+                    ssh -o StrictHostKeyChecking=no ec2-user@${PROD_SERVER} 'find /var/www/html/swe40006 -mindepth 1 -delete'
                     
-                    # Deploy the new files
-                    scp -o StrictHostKeyChecking=no -r * ec2-user@${PROD_SERVER}:/var/www/html/
+                    # Deploy the new files to the specified directory
+                    scp -o StrictHostKeyChecking=no -r * ec2-user@${PROD_SERVER}:/var/www/html/swe40006/
                     """
                 }
             }
