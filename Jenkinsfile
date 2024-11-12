@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment {
-        PROD_SERVER = '3.215.249.125'  // Replace with your actual production server IP
-        SSH_CREDENTIALS = 'c5f1eb9d-fce7-4cbb-a86f-7da927315011'  // Ensure this matches the credentials ID in Jenkins
+        PROD_SERVER = '3.215.249.125'  
+        SSH_CREDENTIALS = 'c5f1eb9d-fce7-4cbb-a86f-7da927315011'  
     }
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/IamRuyy/SWE40006-Group2.git'  // Replace with your actual GitHub URL
+                git branch: 'main', url: 'https://github.com/IamRuyy/SWE40006-Group2.git'
             }
         }
 
