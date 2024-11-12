@@ -12,19 +12,21 @@ pipeline {
         }
 
         stage('Run Tests') {
-    steps {
-        script {
-            def testResult = sh(script: '''
-                cd $WORKSPACE
-                php run-tests.php
-            ''', returnStatus: true)  // This will capture the exit code of the sh command
-
-            if (testResult != 0) {  // If exit code is not 0, mark the build as failed
+            steps {
+            sh '''
+            set -e
+            cd $WORKSPACE
+            php run-tests.php
+            '''
+        }
+        post {
+            failure {
+                echo 'Tests failed. Aborting deployment.'
                 error('Tests failed. Aborting pipeline.')
             }
         }
     }
-}
+
 
 
         stage('Deploy to Production Server') {
