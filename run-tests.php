@@ -3,11 +3,11 @@ require_once("settings.php");
 
 // Connect to MySQL server
 $conn = @mysqli_connect($host, $user, $psw)
-    or die("Test failed: Failed to connect to MySQL server.");
+    or die("Test failed: Failed to connect to MySQL server.\n");
 
 // Select the database
 @mysqli_select_db($conn, $dbnm)
-    or die("Test failed: Database not available.");
+    or die("Test failed: Database not available.\n");
 
 // Test 1: Check Table Creation
 $createTable = "CREATE TABLE IF NOT EXISTS vipmembers (
@@ -20,9 +20,10 @@ $createTable = "CREATE TABLE IF NOT EXISTS vipmembers (
 )";
 
 if (@mysqli_query($conn, $createTable)) {
-    echo "Test 1 passed: Table created successfully or already exists.<br>";
+    echo "Test 1 passed: Table created successfully or already exists.\n";
 } else {
-    die("Test 1 failed: Error creating table.");
+    echo "Test 1 failed: Error creating table.\n";
+    exit(1);  // Exit with non-zero status to indicate failure
 }
 
 // Test 2: Insert a Test Record
@@ -36,9 +37,10 @@ $insert = "INSERT INTO vipmembers (fname, lname, gender, email, phone)
 VALUES ('$fname', '$lname', '$gender', '$email', '$phone')";
 
 if (@mysqli_query($conn, $insert)) {
-    echo "Test 2 passed: Record inserted successfully.<br>";
+    echo "Test 2 passed: Record inserted successfully.\n";
 } else {
-    die("Test 2 failed: Error inserting data.");
+    echo "Test 2 failed: Error inserting data.\n";
+    exit(1);
 }
 
 // Test 3: Verify the Test Record in Database
@@ -46,19 +48,24 @@ $query = "SELECT * FROM vipmembers WHERE fname='$fname' AND lname='$lname' AND e
 $result = @mysqli_query($conn, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
-    echo "Test 3 passed: Record exists in database.<br>";
+    echo "Test 3 passed: Record exists in database.\n";
 } else {
-    die("Test 3 failed: Record not found in database.");
+    echo "Test 3 failed: Record not found in database.\n";
+    exit(1);
 }
 
 // Test 4: Clean up Test Data
 $deleteQuery = "DELETE FROM vipmembers WHERE fname='$fname' AND lname='$lname' AND email='$email'";
 if (@mysqli_query($conn, $deleteQuery)) {
-    echo "Test 4 passed: Test record cleaned up successfully.<br>";
+    echo "Test 4 passed: Test record cleaned up successfully.\n";
 } else {
-    echo "Test 4 failed: Could not delete test record.";
+    echo "Test 4 failed: Could not delete test record.\n";
+    exit(1);
 }
 
 // Close the connection
 mysqli_close($conn);
+
+// Exit with success code if all tests passed
+exit(0);
 ?>

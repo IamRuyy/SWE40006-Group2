@@ -13,21 +13,25 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-            sh '''
-            set -e
-            cd $WORKSPACE
-            php run-tests.php
-            '''
-        }
-        post {
-            failure {
-                echo 'Tests failed. Aborting deployment.'
-                error('Tests failed. Aborting pipeline.')
+                script {
+                    // Run the tests and capture the exit code
+                    def testResult = sh(script: '''
+                        set -e
+                        echo "Starting tests..."
+                        cd $WORKSPACE
+                        php run-tests.php
+                    ''', returnStatus: true)
+
+                    // Check the test result and mark the build as failed if tests failed
+                    if (testResult != 0) {
+                        echo 'Tests failed with exit code ' + testResult.toString()
+                        error('Aborting pipeline due to test failures.')
+                    } else {
+                        echo 'All tests passed.'
+                    }
+                }
             }
         }
-    }
-
-
 
         stage('Deploy to Production Server') {
             when {
