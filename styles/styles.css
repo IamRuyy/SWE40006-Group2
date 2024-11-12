@@ -30,7 +30,7 @@ input[type="text"],
 input[type="email"],
 input[type="submit"],
 input[type="reset"] {
-    width: 98%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
