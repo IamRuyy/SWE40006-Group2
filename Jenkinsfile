@@ -12,20 +12,26 @@ pipeline {
         }
 
         stage('Run Tests') {
-    steps {
-        // Run tests directly from the Jenkins workspace
-        sh '''
-        cd $WORKSPACE
-        php run-tests.php
-        '''
-    }
-}
-
+            steps {
+                // Run tests directly on Jenkins, as it serves as the test server
+                sh '''
+                cd $WORKSPACE
+                php run-tests.php
+                '''
+            }
+            // Fail the build if this stage fails
+            post {
+                failure {
+                    echo 'Tests failed. Aborting deployment.'
+                    currentBuild.result = 'FAILURE'  // Mark the build as failed
+                }
+            }
+        }
 
         stage('Deploy to Production Server') {
             when {
                 expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'  // Deploy only if previous stages succeeded
                 }
             }
             steps {
