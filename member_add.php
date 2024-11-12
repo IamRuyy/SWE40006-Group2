@@ -43,17 +43,17 @@
         VALUES ('$fname', '$lname', '$gender', '$email', '$phone')";
 
         echo "<h1>Successfully adding new member</h1>";
-        echo "<p><b>First Name:</b> $fname</p>";
-        echo "<p><b>Last Name:</b> $lname</p>";
-        echo "<p><b>Gender:</b> $gender</p>";
-        echo "<p><b>Email:</b> $email</p>";
-        echo "<p><b>Phone:</b> $phone</p>";
+        echo "<p style='text-align:center;'><b>First Name:</b> $fname</p>";
+        echo "<p style='text-align:center;'><b>Last Name:</b> $lname</p>";
+        echo "<p style='text-align:center;'><b>Gender:</b> $gender</p>";
+        echo "<p style='text-align:center;'><b>Email:</b> $email</p>";
+        echo "<p style='text-align:center;'><b>Phone:</b> $phone</p>";
         
         @mysqli_query($conn, $insert) 
             or die('Error inserting data');
     }
     else {
-        echo "<p style='color:red'>Please enter all the inputs in the form.</p>";
+        echo "<p style='color:red; text-align:center;'>Please enter all the inputs in the form.</p>";
     }
 
     //Close the connection
