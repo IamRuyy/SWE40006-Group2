@@ -2,12 +2,17 @@
 require_once("settings.php");
 
 // Connect to MySQL server
-$conn = @mysqli_connect($host, $user, $psw)
-    or die("Test failed: Failed to connect to MySQL server.\n");
+$conn = @mysqli_connect($host, $user, $psw);
+if (!$conn) {
+    echo "Test failed: Failed to connect to MySQL server.\n";
+    exit(1);  // Non-zero exit for failure
+}
 
 // Select the database
-@mysqli_select_db($conn, $dbnm)
-    or die("Test failed: Database not available.\n");
+if (!@mysqli_select_db($conn, $dbnm)) {
+    echo "Test failed: Database not available.\n";
+    exit(1);
+}
 
 // Test 1: Check Table Creation
 $createTable = "CREATE TABLE IF NOT EXISTS vipmembers (
@@ -23,7 +28,7 @@ if (@mysqli_query($conn, $createTable)) {
     echo "Test 1 passed: Table created successfully or already exists.\n";
 } else {
     echo "Test 1 failed: Error creating table.\n";
-    exit(1);  // Exit with non-zero status to indicate failure
+    exit(1);
 }
 
 // Test 2: Insert a Test Record
