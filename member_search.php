@@ -54,7 +54,7 @@
         mysqli_close($conn);
     }
     else {
-        echo "<p style='color:red'>Please enter the input for Last Name</p>";
+        echo "<p style='color:red; text-align:center;'>Please enter the input for Last Name</p>";
     }
 ?>
 <a href="vip_member.php">Return to Home Page</a>
