@@ -29,7 +29,7 @@ class DatabaseTest extends PHPUnit\Framework\TestCase {
             phone VARCHAR(20)
         )";
 
-        $result = mysqli_query($this->con, $createTable);
+        $result = mysqli_query($this->conn, $createTable);
         $this->assertNotFalse($result, "Test 1 failed: Error creating table.");
     }
 
@@ -41,7 +41,7 @@ class DatabaseTest extends PHPUnit\Framework\TestCase {
         $phone = "1234567890";
 
         $insert = "INSERT INTO vipmembers (fname, lname, gender, email, phone)
-                   VALUES ('$fname', '$lname', '$gender', '$email', '$phon')";
+                   VALUES ('$fname', '$lname', '$gender', '$email', '$phone')";
 
         $result = mysqli_query($this->conn, $insert);
         $this->assertNotFalse($result, "Test 2 failed: Error inserting data.");
