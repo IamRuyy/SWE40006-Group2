@@ -46,7 +46,7 @@ input[type="reset"] {
 
 input[type="submit"],
 input[type="reset"] {
-    background-color: #007BFF;
+    background-color: #00ff9d;
     color: #fff;
     border: none;
     cursor: pointer;
