@@ -12,21 +12,20 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                // Run tests directly on Jenkins, as it serves as the test server
-                sh '''
+    steps {
+        script {
+            def testResult = sh(script: '''
                 cd $WORKSPACE
                 php run-tests.php
-                '''
-            }
-            // Fail the build if this stage fails
-            post {
-                failure {
-                    echo 'Tests failed. Marking build as failed.'
-                    error('Tests failed. Aborting pipeline.')
-                }
+            ''', returnStatus: true)  // This will capture the exit code of the sh command
+
+            if (testResult != 0) {  // If exit code is not 0, mark the build as failed
+                error('Tests failed. Aborting pipeline.')
             }
         }
+    }
+}
+
 
         stage('Deploy to Production Server') {
             when {
