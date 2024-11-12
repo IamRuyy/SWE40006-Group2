@@ -5,7 +5,8 @@
     <meta name="description" content="Web application development" />
     <meta name="keywords" content="PHP" />
     <meta name="author" content="Nguyen Pham Duy" />
-<title>TITLE</title>
+    <link rel="stylesheet" href="styles.css">
+<title>PHP Web Application</title>
 </head>
 <body>
 <h1>Member Listing</h1>
