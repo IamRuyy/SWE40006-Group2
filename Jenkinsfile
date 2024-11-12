@@ -12,14 +12,15 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                // Run tests directly on Jenkins, as it serves as the test server
-                sh '''
-                cd $WORKSPACE
-                php /var/www/html/run-tests.php
-                '''
-            }
-        }
+    steps {
+        // Run tests directly from the Jenkins workspace
+        sh '''
+        cd $WORKSPACE
+        php run-tests.php
+        '''
+    }
+}
+
 
         stage('Deploy to Production Server') {
             when {
