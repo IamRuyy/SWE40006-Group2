@@ -5,7 +5,7 @@
     <meta name="description" content="Web application development" />
     <meta name="keywords" content="PHP" />
     <meta name="author" content="Nguyen Pham Duy" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 <title>PHP Web Application</title>
 </head>
 <body>
