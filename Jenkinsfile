@@ -11,15 +11,29 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                # Install Composer if not already installed
+                if [ ! -f "composer.phar" ]; then
+                    curl -sS https://getcomposer.org/installer | php
+                fi
+
+                # Install dependencies including PHPUnit
+                php composer.phar install
+                '''
+            }
+        }
+
         stage('Run Tests') {
             steps {
                 script {
-                    // Run the tests and capture the exit code
+                    // Run PHPUnit tests and capture the result
                     def testResult = sh(script: '''
                         set -e
-                        echo "Starting tests..."
+                        echo "Starting tests with PHPUnit..."
                         cd $WORKSPACE
-                        php tests/DatabaseTest.php  
+                        vendor/bin/phpunit --configuration phpunit.xml
                     ''', returnStatus: true)
 
                     // Check the test result and mark the build as failed if tests failed
@@ -53,6 +67,17 @@ pipeline {
                     """
                 }
             }
+        }
+    }
+    post {
+        always {
+            junit '**/tests/results/*.xml' // Path where PHPUnit results are stored
+        }
+        failure {
+            echo 'Build failed!'
+        }
+        success {
+            echo 'Build completed successfully!'
         }
     }
 }
