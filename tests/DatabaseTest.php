@@ -29,7 +29,7 @@ class DatabaseTest extends PHPUnit\Framework\TestCase {
             phone VARCHAR(20)
         )";
 
-        $result = mysqli_query($this->conn, $createTable);
+        $result = mysqli_query($this->con, $createTable);
         $this->assertNotFalse($result, "Test 1 failed: Error creating table.");
     }
 
