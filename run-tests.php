@@ -2,7 +2,7 @@
 require_once("settings.php");
 
 // Connect to MySQL server
-$conn = @mysqli_connect($host, $user, $pswd)
+$conn = @mysqli_connect($host, $user, $psw)
     or die("Test failed: Failed to connect to MySQL server.");
 
 // Select the database
