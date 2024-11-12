@@ -1,26 +1,25 @@
 <?php
-use PHPUnit\Framework\TestCase;
+require_once __DIR__ . '/../settings.php';
 
-class DatabaseTest extends TestCase
-{
-    private $conn;
+class DatabaseTest extends PHPUnit\Framework\TestCase {
+    
+    protected $conn;
 
-    protected function setUp(): void
-    {
-        require_once("settings.php");
-        $this->conn = mysqli_connect($host, $user, $pswd, $dbnm);
-        $this->assertNotFalse($this->conn, "Failed to connect to MySQL server.");
+    protected function setUp(): void {
+        $this->conn = @mysqli_connect($GLOBALS['host'], $GLOBALS['user'], $GLOBALS['pswd']);
+        $this->assertNotFalse($this->conn, "Test failed: Failed to connect to MySQL server.");
+
+        $selected = @mysqli_select_db($this->conn, $GLOBALS['dbnm']);
+        $this->assertNotFalse($selected, "Test failed: Database not available.");
     }
 
-    protected function tearDown(): void
-    {
+    protected function tearDown(): void {
         if ($this->conn) {
             mysqli_close($this->conn);
         }
     }
 
-    public function testCreateTable()
-    {
+    public function testTableCreation() {
         $createTable = "CREATE TABLE IF NOT EXISTS vipmembers (
             member_id INT AUTO_INCREMENT PRIMARY KEY,
             fname VARCHAR(40),
@@ -31,11 +30,10 @@ class DatabaseTest extends TestCase
         )";
 
         $result = mysqli_query($this->conn, $createTable);
-        $this->assertTrue($result, "Failed to create table.");
+        $this->assertNotFalse($result, "Test 1 failed: Error creating table.");
     }
 
-    public function testInsertRecord()
-    {
+    public function testInsertRecord() {
         $fname = "Test";
         $lname = "User";
         $gender = "M";
@@ -44,29 +42,23 @@ class DatabaseTest extends TestCase
 
         $insert = "INSERT INTO vipmembers (fname, lname, gender, email, phone)
                    VALUES ('$fname', '$lname', '$gender', '$email', '$phone')";
+
         $result = mysqli_query($this->conn, $insert);
-        $this->assertTrue($result, "Failed to insert record.");
+        $this->assertNotFalse($result, "Test 2 failed: Error inserting data.");
     }
 
-    public function testVerifyRecord()
-    {
-        $fname = "Test";
-        $lname = "User";
-        $email = "testuser@example.com";
-
-        $query = "SELECT * FROM vipmembers WHERE fname='$fname' AND lname='$lname' AND email='$email'";
+    public function testVerifyRecord() {
+        $query = "SELECT * FROM vipmembers WHERE fname='Test' AND lname='User' AND email='testuser@example.com'";
         $result = mysqli_query($this->conn, $query);
-        $this->assertTrue($result && mysqli_num_rows($result) > 0, "Record not found in database.");
+        
+        $this->assertNotFalse($result, "Test 3 failed: Query execution failed.");
+        $this->assertGreaterThan(0, mysqli_num_rows($result), "Test 3 failed: Record not found in database.");
     }
 
-    public function testCleanupRecord()
-    {
-        $fname = "Test";
-        $lname = "User";
-        $email = "testuser@example.com";
-
-        $deleteQuery = "DELETE FROM vipmembers WHERE fname='$fname' AND lname='$lname' AND email='$email'";
+    public function testCleanupRecord() {
+        $deleteQuery = "DELETE FROM vipmembers WHERE fname='Test' AND lname='User' AND email='testuser@example.com'";
         $result = mysqli_query($this->conn, $deleteQuery);
-        $this->assertTrue($result, "Failed to delete test record.");
+        
+        $this->assertNotFalse($result, "Test 4 failed: Could not delete test record.");
     }
 }
