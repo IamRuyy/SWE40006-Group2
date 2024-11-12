@@ -19,7 +19,7 @@ pipeline {
                         set -e
                         echo "Starting tests..."
                         cd $WORKSPACE
-                        php tests/run-tests.php  // Updated path to run-tests.php
+                        php tests/DatabaseTest.php  
                     ''', returnStatus: true)
 
                     // Check the test result and mark the build as failed if tests failed
