@@ -38,7 +38,7 @@ $gender = "M";
 $email = "testuser@example.com";
 $phone = "1234567890";
 
-$insert = "INSERT INTO vipmembers (fname, lname, gender, email, pho)
+$insert = "INSERT INTO vipmembers (fname, lname, gender, email, phone)
 VALUES ('$fname', '$lname', '$gender', '$email', '$phone')";
 
 if (@mysqli_query($conn, $insert)) {
