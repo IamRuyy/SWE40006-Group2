@@ -12,7 +12,7 @@ h1 {
 }
 
 form {
-    max-width: 600px;
+    max-width: 700px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -30,7 +30,7 @@ input[type="text"],
 input[type="email"],
 input[type="submit"],
 input[type="reset"] {
-    width: 95%;
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
