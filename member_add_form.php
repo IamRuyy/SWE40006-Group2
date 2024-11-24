@@ -9,7 +9,7 @@
 <body>
     <h1>Add New Member</h1>
     <form action="member_add.php" method="post">
-        <label for="fname">first Name:</label>
+        <label for="fname">First Name:</label>
         <input type="text" id="fname" name="fname"><br><br>
         
         <label for="lname">Last Name:</label>
